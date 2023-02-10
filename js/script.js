@@ -384,3 +384,211 @@ const getFriendsByOnlineStatusTree = function (allFriends) {
 };
 
 console.log(getFriendsByOnlineStatusTree(friends));
+
+// Module tree. Class six. Objects
+console.log('Module tree. Class six');
+
+// Array.prototipe.concat()
+[].concat();
+
+const numbers = [1, 2, 3, 4, 5].concat([6, 7, 8], [9, 10]);
+
+console.log(numbers);
+
+// spread
+const numbersOne = [0, ...[1, 2, 3], 4, 5];
+console.log(numbersOne);
+
+const numbersTwo = [
+    1000,
+    ...[10, 20, 30],
+    2000,
+    ...[40, 50, 60, 70],
+    ...[80, 90, 100],
+];
+console.log(numbersTwo);
+
+// Math.max
+const temperature = Math.max(1, 2, 3, 4, 5,);
+console.log(temperature);
+
+let maxInNumbersTwo = Math.max(numbersTwo);
+console.log(maxInNumbersTwo); // NaN
+
+maxInNumbersTwo = Math.max(...numbersTwo);
+console.log(maxInNumbersTwo); // 2000
+
+console.log(...numbersTwo);
+
+// equality complex data types
+const a = [1, 2, 3, 4, 5,];
+const b = [...a];
+
+console.log(a);
+console.log(b);
+
+console.log('1:', a === b);
+console.log('2:', a[0] === b[0]);
+
+const c = a;
+const d = b;
+
+console.log('3:', c === a);
+console.log('4:', d === b);
+console.log('5:', c === b);
+console.log('6:', c === d);
+
+const e = [{ x: 1, }, { y: 2, }, { z: 3, },];
+const f = [...e];
+
+console.log('7:', e === f);
+console.log('8:', e[0] === f[0]);
+
+// Task 2.1 ...
+console.log('Task 2.1');
+
+const lastWeekTemps = [1, 2, 3];
+const currentTemps = [4, 5, 6];
+const nextWeekTemps = [7, 8, 9];
+const afterNextWeekTemps = [10, 11, 12];
+
+const allTemps = [...lastWeekTemps, ...currentTemps];
+console.log(allTemps);
+
+allTemps.push(...nextWeekTemps, ...afterNextWeekTemps);
+console.log(allTemps);
+
+// spred object
+const objC = { x: 1, y: 2, };
+const objD = { x: 0, z: 3, };
+
+const objE = Object.assign({}, objC, objD);
+console.log(objE);
+
+const objF = Object.assign({ x: 5, }, objE,);
+console.log(objF);
+
+const varA = {};
+Object.assign(varA, objF);
+console.log(varA);
+
+const objG = {
+    ...objC,
+    name: 'a',
+    ...objD,
+    x: 20,
+};
+
+console.log(objG);
+
+const words = {
+    animal: 'dog',
+    sport: 'football',
+    fruit: 'apple',
+}
+
+// const { animal, sport, fruit, } = words;
+const keysWords = Object.keys(words);
+console.log(keysWords);
+const { animal, sport, fruit: food = cucumber, build = 'house', } = words;
+
+console.log(animal, sport, food, build);
+
+const rgb = [255, 100, 80];
+const [red, green, blue] = rgb;
+
+const colors = ['black', 'white', 'brown', 'gray', 'orange', 'purple', 'yelow',];
+console.log(colors);
+
+const [black = [1, 2, 3]] = colors;
+console.log(black);
+
+const keysAndValuesWords = Object.entries(words);
+
+for (const keyAndValue of keysAndValuesWords) {
+    console.log(keyAndValue);
+    const [name, value] = keyAndValue;
+    console.log(name, value);
+}
+
+// basket
+const cart = {
+    items: [],
+    getItems() {
+        return this.items;
+    },
+    add(product) {
+        const { items } = this;
+
+        for (const item of items) {
+            if (item.name === product.name) {
+                item.quantity += 1;
+                return;
+            }
+        }
+
+        const newProduct = {
+            ...product,
+            quantity: 1,
+        };
+
+        items.push(newProduct);
+    },
+    remuve(productName) {
+        const { items } = this;
+        for (const item of items) {
+            if (item.name === productName) {
+                items.splice(items.indexOf(item), 1);
+                return;
+            }
+        }
+        return console.log(`Product ${productName} not found in the basket.`);
+    },
+    clear() {
+        this.items = [];
+    },
+    countTotalPrice() { 
+        const { items } = this;
+        let total = 0;
+
+        for (const { price, quantity } of items) {
+            total += price * quantity;
+        }
+
+        return total;
+    },
+    increaseQuantity(productName) {
+        const { items } = this;
+        for (const item of items) {
+            if (item.name === productName) {
+                item.quantity += 1;
+                return;
+            }
+        }
+    },
+    decreaseQuantity(productName) {
+        const { items } = this;
+        for (const item of items) {
+            if (item.name === productName) {
+                item.quantity -= 1;
+                return;
+            }
+        }
+    },
+};
+
+cart.add({ name: 'apple', icon: '🍎', price: 10, });
+cart.add({ name: 'lemon', icon: '🍋', price: 20, });
+cart.add({ name: 'lemon', icon: '🍋', price: 20, });
+cart.add({ name: 'lemon', icon: '🍋', price: 20, });
+cart.add({ name: 'cucumber', icon: '🥒', price: 30, });
+cart.add({ name: 'peach', icon: '🍑', price: 40, });
+cart.add({ name: 'tomato', icon: '🍅', price: 50, });
+cart.add({ name: 'tomato', icon: '🍅', price: 50, });
+
+cart.remuve('apple');
+cart.increaseQuantity('cucumber');
+cart.decreaseQuantity('lemon');
+// cart.clear();
+console.table(cart.items);
+console.log('Total:', cart.countTotalPrice());
